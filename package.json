@@ -1,0 +1,25 @@
+{
+  "name": "binarylogic",
+  "version": "1.0.0",
+  "description": "Binary-Logic-CLI",
+  "main": "index.js",
+  "dependencies": {
+    "@types/prompts": "^2.4.9",
+    "prompts": "^2.4.2",
+    "undici-types": "^6.20.0"
+  },
+  "scripts": {
+    "start": "npx tsc && node ./dist/main.js",
+    "start:dev": "nodemon --exec ts-node ./src/main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TsitouhRanjafy/Algorithme-.git"
+  },
+  "author": "Tsitohaina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TsitouhRanjafy/Algorithme-/issues"
+  },
+  "homepage": "https://github.com/TsitouhRanjafy/Algorithme-#readme"
+}
