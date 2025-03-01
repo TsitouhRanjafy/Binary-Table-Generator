@@ -1,3 +1,5 @@
+import { sliceString } from "./lib";
+import { expression, operation } from "./model";
 
 export const isParantheseNumberEqual = (text: string): boolean => {
     const format1 = /\(/g;
@@ -9,24 +11,35 @@ export const isParantheseNumberEqual = (text: string): boolean => {
     return true
 }
 
-export const extractByParenthese = (text: string) => {
-    const regex = /\(([a-z]|&|~|=>|\||<=>)*\)/g;    
-    const result = [...text.matchAll(regex)].map(match => {
-        return {
-            value: match[0],
-            end: match[1],
-            index: match.index
-        }
-    })
+
+export const extractOperation = (expressions: expression[]): operation[] | void => {
+    let tableOperations: operation[] = []
     
-    return result;
+    for (const expression of expressions){
+        let temp: operation | void = extractValidExpression(expression.value)
+        if (!temp) return;
+        tableOperations.push(temp);
+    }
+    return tableOperations
 }
 
-export const isValidExpression = (textWhiteParanthese: string) => {
-    if (textWhiteParanthese.length > 9){
-        return false;
+const extractValidExpression = (expression: string): operation | void => {
+    if (expression.length > 9) return;
+
+    const regexp = new RegExp("[& | => <=>]+","g")
+
+    const array = expression.split(regexp)
+    
+    const operator: string = sliceString(expression,array[0].length,(expression.length-array[1].length))
+
+    const result: operation = {
+        variable1: sliceString(array[0],1),
+        variable2: sliceString(array[1],0,array[1].length-1),
+        operator: operator
     }
-    return true
+    return result
 }
+
+
 
 

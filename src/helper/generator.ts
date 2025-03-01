@@ -1,8 +1,9 @@
 import { binaryIteration } from "./lib";
+import { Binary, binary } from "./model";
 
 
-export const generateInitBinaryTable = (variable: string[]): Array<Array<any>> => {
-    let table: Array<Array<any>> = []
+export const generateInitBinaryTable = (variable: string[]): binary[][] => {
+    let table: binary[][] = []
     for (let i = 0; i < variable.length; i++){
         table.push(generateTable(Math.pow(2,variable.length)))
     }
@@ -16,13 +17,13 @@ export const generateInitBinaryTable = (variable: string[]): Array<Array<any>> =
     return table
 }
 
-export const generateTable = (dimension: number): Array<Array<number>> => {
+export const generateTable = (dimension: number): binary[] => {
     if (dimension <= 0){
         return []
     }
-    let array: Array<Array<number>> = []
+    let array: binary[] = []
     for (let i = 0; i < dimension;i++){
-        array.push([0])
+        array.push(Binary(0))
     }
     return array
 }
