@@ -46,8 +46,6 @@ export const consoleBinaryTable = (tables: Array<Array<any>>,variable: Array<str
             jsonString += `"${variable[ligne]}": ${tables[ligne][colonnne]}`;
 
             (ligne == 0)? jsonString += '}':jsonString+=',';
-            
-            
         }
         
         temp.push(JSON.parse(jsonString))

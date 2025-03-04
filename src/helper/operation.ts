@@ -18,48 +18,54 @@ export const mainOperation = (operations: operation[],table: Dictionnaire,variab
         let v2 = table.getValue(operation.variable2)
         let var1 = operation.variable1;
         let var2 = operation.variable2;
+        let operator = operation.operator
         
         if (!v1) {
-            var1 = pseudoVar.getValue(operation.variable1).trim()
-            v1 = table.getValue(var1.trim());
+            // var1 = pseudoVar.getValue(operation.variable1).trim()
+            v1 = table.getValue(pseudoVar.getValue(operation.variable1).trim());
         }
         if (!v2){
-            var2 = pseudoVar.getValue(operation.variable2).trim()
-            v2 = table.getValue(var2);
+            // var2 = pseudoVar.getValue(operation.variable2).trim()
+            v2 = table.getValue(pseudoVar.getValue(operation.variable2).trim());
         }
+        if (var1 == var2) { 
+            var2 = '' 
+            operator = ''
+        };
+        console.log(v1,":",v2);
         
         switch (operation.operator) {
             case '&':
                 table.addValue(
-                    ("("+var1+operation.operator+var2+")"),
+                    ("("+var1+operator+var2+")"),
                     BinaryOperations.ET(v1,v2)
                 ) 
-                variable.push("("+var1+operation.operator+var2+")")
-                binaireTable = [...[table.getValue(("("+var1+operation.operator+var2+")"))],...binaireTable] 
+                variable.push("("+var1+operator+var2+")")
+                binaireTable = [...[table.getValue(("("+var1+operator+var2+")"))],...binaireTable] 
                 break;
             case '|':
                 table.addValue(
-                    ("("+var1+operation.operator+var2+")"),
+                    ("("+var1+operator+var2+")"),
                     BinaryOperations.OR(v1,v2)
                 ) 
-                variable.push("("+var1+operation.operator+var2+")")
-                binaireTable = [...[table.getValue(("("+var1+operation.operator+var2+")"))],...binaireTable] 
+                variable.push("("+var1+operator+var2+")")
+                binaireTable = [...[table.getValue(("("+var1+operator+var2+")"))],...binaireTable] 
                 break;
             case '=>':
                 table.addValue(
-                    ("("+var1+operation.operator+var2+")"),
+                    ("("+var1+operator+var2+")"),
                     BinaryOperations.IMPLIQUE(v1,v2)
                 ) 
-                variable.push("("+var1+operation.operator+var2+")")
-                binaireTable = [...[table.getValue(("("+var1+operation.operator+var2+")"))],...binaireTable] 
+                variable.push("("+var1+operator+var2+")")
+                binaireTable = [...[table.getValue(("("+var1+operator+var2+")"))],...binaireTable] 
                 break;
             case '<=>':
                 table.addValue(
-                    ("("+var1+operation.operator+var2+")"),
+                    ("("+var1+operator+var2+")"),
                     BinaryOperations.EQUIVALENT(v1,v2)
                 ) 
-                variable.push("("+var1+operation.operator+var2+")")
-                binaireTable = [...[table.getValue(("("+var1+operation.operator+var2+")"))],...binaireTable] 
+                variable.push("("+var1+operator+var2+")")
+                binaireTable = [...[table.getValue(("("+var1+operator+var2+")"))],...binaireTable] 
                 break;
             default:
                 console.log(" - Erro of operator");

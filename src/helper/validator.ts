@@ -30,13 +30,23 @@ const extractValidExpression = (expression: string): operation | void => {
 
     const array = expression.split(regexp)
     
-    const operator: string = sliceString(expression,array[0].length,(expression.length-array[1].length))
-
-    const result: operation = {
-        variable1: sliceString(array[0],1),
-        variable2: sliceString(array[1],0,array[1].length-1),
-        operator: operator
+    
+    let result: operation;
+    if (array.length >= 2){
+        const operator: string = sliceString(expression,array[0].length,(expression.length-array[1].length))
+        result = {
+            variable1: sliceString(array[0],1),
+            variable2: sliceString(array[1],0,array[1].length-1),
+            operator: operator
+        }
+    } else {
+        result = {
+            variable1: sliceString(array[0],1,array[0].length - 1),
+            variable2: sliceString(array[0],1,array[0].length - 1),
+            operator: '|'
+        }
     }
+    
     return result
 }
 
