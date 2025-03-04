@@ -1,8 +1,9 @@
 import prompts from 'prompts'
-import { removeSpace, extractVariable, consoleBinaryTable, extractByParenthese } from './helper/lib';
+import { removeSpace, extractVariable, consoleBinaryTable, extractByParenthese, Dictionnaire, remplaceTo, formatLogicalExpression } from './helper/lib';
 import { isParantheseNumberEqual, extractOperation } from './helper/validator';
 import { generateInitBinaryTable } from './helper/generator';
 import { binary, operation } from './helper/model';
+import { mainOperation } from './helper/operation';
 
 
 
@@ -18,25 +19,9 @@ import { binary, operation } from './helper/model';
  */
 
 
-var table: binary[][] = []
-var variable: string[] = []
-var pseudoVar: object[] = []
-var pseudoDispo = ['F','P','R','Q','X','Y']  
-
-
-
-export const mainOperation = (operation: operation) => {
-    console.log("\n\n\n\t -operation-",operation.operator);
-    console.log(table[variable.indexOf(operation.variable1)]);
-    console.log(table[variable.indexOf(operation.variable2)]);
-}
-
-
-
-
-
-
-
+var table = new Dictionnaire();
+var pseudoVariable = new Dictionnaire();
+var pseuDoVarDisponible = ['A','B','C','D','E','F','J','K','L','M']
 
 const index = async (): Promise<void> => {
     
@@ -48,57 +33,57 @@ const index = async (): Promise<void> => {
         } = await prompts({
             type: 'text',
             name: 'value',
-            message: 'Ecrire text',
+            message: 'Entrer expression',
         })
-
-
         var input: string = removeSpace(response.value) 
         input = '('+input+')'.toLowerCase()
+
+
         console.log("\n\n expression: ",input);
         
-        // verifie the form of expression 
+        // // verifie the form of expression 
         if (!isParantheseNumberEqual(input)){
             console.error("\n - not accepted: verifier les paranthèses \n");
-            break;
+            return;
         } 
 
-        // init binary variable and binary table
-        variable = extractVariable(input).reverse()
-        const temp = [...variable] 
-
-        
-        // print
-        console.log("[dev] variable: ",variable, ",n: ",variable.length); // for dev
-        console.log(" variable: ",temp.reverse(), ",n: ",variable.length);
-        console.log("[dev]"); // for dev
-        table = generateInitBinaryTable(variable) 
-        console.table(table) // for dev
-        consoleBinaryTable(table,variable)
-
+        // // init binary variable and binary table
+        let variable = extractVariable(input)
+        let binaryIinit = generateInitBinaryTable(variable);
+        for (let i = (binaryIinit.length - 1); i >= 0; i--){
+            table.addValue(variable[variable.length - i - 1],binaryIinit[i])
+        }
+        // console.log(binaryIinit);
+        // consoleBinaryTable(binaryIinit,[...variable].reverse())
 
         
         // extract the first operation 
-        const operations: operation[] | void = extractOperation(extractByParenthese(input)); 
+        let operations: operation[] | void = extractOperation(extractByParenthese(input)); 
+        // console.log(operations);
         if (!operations){
-            console.error(' Error of expression');
-            break;
+            console.log(" - expression not accepted");
+            return;
         }
-        console.log(operations);
-        
-        console.log(input);
-        // check if operation NON
-        // mije à jour variable
-        // fait l'operation
-        
-        for (const operation of operations){
-            mainOperation(operation)
-        }
-        // mije à jour table, input (expression), variable
 
-        // extract the first operation
-        // fait l'operation
-        // mije à jour table et input (expression)
+        binaryIinit = mainOperation(operations,table,variable,binaryIinit)
+        consoleBinaryTable(binaryIinit,[...variable].reverse())
         
+        
+        /** ************************************** */
+        // for (const i of extractByParenthese(input)){
+        //     let pseudo = pseuDoVarDisponible.splice(pseuDoVarDisponible.length-1,pseuDoVarDisponible.length)[0]
+        //     input = remplaceTo(input,i.value,pseudo)
+        //     pseudoVariable.addValue(pseudo,i.value)
+        // }
+        // input = formatLogicalExpression(input)
+        // console.log(pseudoVariable);
+        // console.log(input);
+        
+        
+        // variable = extractVariable(input)
+        // console.log(variable);
+        // operations = extractOperation(extractByParenthese(input))
+        // console.log(operations);
         
 
         

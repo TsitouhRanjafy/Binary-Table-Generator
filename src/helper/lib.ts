@@ -1,4 +1,4 @@
-import { expression } from "./model";
+import { binary, expression } from "./model";
 
 export const removeSpace = (text: string): string => {
     text = text.trim();
@@ -66,7 +66,7 @@ export const binaryIteration = (table: Array<Array<number>>,ligne: number,colonn
 }
 
 export const extractByParenthese = (text: string): expression[] => {
-    const regex = /\(([a-z]|&|~|=>|\||<=>)*\)/g;    
+    const regex = /\(([a-z]|&|~|=>|\||<=>|[A-Z])*\)/g;    
     const result: expression[] = [...text.matchAll(regex)].map(match => {
         return {
             value: match[0],
@@ -86,3 +86,61 @@ export const sliceString = (text: string,debut: number,fin: number = text.length
     return str;
 }
 
+
+export class Dictionnaire {
+    private map = new Map();
+    private set = new Set();
+
+    public addValue (key: string,value: binary[] | string): void {
+        this.map.set(key,value);
+        this.set.add(value);
+    }
+
+    public getValue(key: string): binary[] {
+        return this.map.get(key)
+    }
+
+    public hasValue(value: binary[] | string): boolean {
+        return (this.set.has(value))? true : false;
+    }
+
+    public hasKey(key: string): boolean {
+        return (this.map.has(key))? true : false;
+    }
+}
+
+export const remplaceTo = (str: string,original:string,input: string): string => {
+    const remplace = (str: string,start: number = 0,end: number,input: string): string => {
+        
+        if (end == -1) end = str.length;
+    
+        let temp = ''
+        for (let i = 0;i < start;i++){
+            temp += str[i]
+        }
+        temp += input
+        for (let i = end; i < str.length; i ++){
+            temp += str[i]
+        }
+    
+        return temp;
+    
+    }
+    
+    let start = str.indexOf(original)
+    let end = original.length;
+
+    return remplace(str,start,start+end,input);
+}
+
+export const formatLogicalExpression = (expression: string): string => {
+    // Fonction pour ajouter des parenthèses autour des opérateurs & et |
+    function addParentheses(match: string, p1: string, p2: string, p3: string): string {
+      return `(${p1}${p2}${p3})`;
+    }
+  
+    // Remplacer les expressions avec & et | combinés avec d'autres opérateurs
+    let formattedExpression = expression.replace(/([A-Za-z()]+)([\|&])([A-Za-z()]+)/g, addParentheses);
+  
+    return formattedExpression;
+}
