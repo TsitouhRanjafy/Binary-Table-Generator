@@ -1,5 +1,5 @@
 import prompts from 'prompts'
-import { removeSpace, extractVariable, consoleBinaryTable, extractByParenthese, Dictionnaire, remplaceTo, formatLogicalExpression } from './helper/lib';
+import { removeSpace, extractVariable, consoleBinaryTable, extractByParenthese, Dictionnaire, remplaceTo, formatLogicalExpression, DictionnaireString } from './helper/lib';
 import { isParantheseNumberEqual, extractOperation } from './helper/validator';
 import { generateInitBinaryTable } from './helper/generator';
 import { binary, operation } from './helper/model';
@@ -20,7 +20,7 @@ import { mainOperation } from './helper/operation';
 
 
 var table = new Dictionnaire();
-var pseudoVariable = new Dictionnaire();
+var pseudoVariable = new DictionnaireString();
 var pseuDoVarDisponible = ['A','B','C','D','E','F','J','K','L','M']
 
 const index = async (): Promise<void> => {
@@ -53,10 +53,9 @@ const index = async (): Promise<void> => {
         for (let i = (binaryIinit.length - 1); i >= 0; i--){
             table.addValue(variable[variable.length - i - 1],binaryIinit[i])
         }
-        // console.log(binaryIinit);
-        // consoleBinaryTable(binaryIinit,[...variable].reverse())
-
         
+         /** ************************************** */
+
         // extract the first operation 
         let operations: operation[] | void = extractOperation(extractByParenthese(input)); 
         // console.log(operations);
@@ -64,29 +63,42 @@ const index = async (): Promise<void> => {
             console.log(" - expression not accepted");
             return;
         }
-
-        binaryIinit = mainOperation(operations,table,variable,binaryIinit)
-        consoleBinaryTable(binaryIinit,[...variable].reverse())
-        
-        
-        /** ************************************** */
-        // for (const i of extractByParenthese(input)){
-        //     let pseudo = pseuDoVarDisponible.splice(pseuDoVarDisponible.length-1,pseuDoVarDisponible.length)[0]
-        //     input = remplaceTo(input,i.value,pseudo)
-        //     pseudoVariable.addValue(pseudo,i.value)
-        // }
-        // input = formatLogicalExpression(input)
+        binaryIinit = mainOperation(operations,table,variable,binaryIinit,pseudoVariable)
+        // consoleBinaryTable(binaryIinit,[...variable].reverse())
+        // new input
+        for (const i of extractByParenthese(input)){
+            let pseudo = pseuDoVarDisponible.splice(pseuDoVarDisponible.length-1,pseuDoVarDisponible.length)[0]
+            input = remplaceTo(input,i.value,pseudo)
+            pseudoVariable.addValue(pseudo,i.value)
+        }
+        input = formatLogicalExpression(input)
         // console.log(pseudoVariable);
         // console.log(input);
         
         
-        // variable = extractVariable(input)
-        // console.log(variable);
-        // operations = extractOperation(extractByParenthese(input))
-        // console.log(operations);
+        /** ************************************** */
+        operations = extractOperation(extractByParenthese(input))
+        if (!operations){
+            console.log(" - expression not accepted")
+            return;
+        }
+        binaryIinit = mainOperation(operations,table,variable,binaryIinit,pseudoVariable)
+        consoleBinaryTable(binaryIinit,[...variable].reverse());  
+        // console.log(input);
+        // new input
+        for (const i of extractByParenthese(input)){
+            let pseudo = pseuDoVarDisponible.splice(pseuDoVarDisponible.length-1,pseuDoVarDisponible.length)[0]
+            input = remplaceTo(input,i.value,pseudo)
+            pseudoVariable.addValue(pseudo,i.value)
+        }
+        input = formatLogicalExpression(input);
+        console.log(pseudoVariable);
+        console.log(input);
+
+        /** ************************************** */
+        
         
 
-        
     } while (input != '(stop)');
 
 }

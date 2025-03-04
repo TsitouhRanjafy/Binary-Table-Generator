@@ -38,7 +38,7 @@ export const consoleBinaryTable = (tables: Array<Array<any>>,variable: Array<str
         console.error(' Error On Console Perso')
         return;
     }
-
+    
     for (let colonnne = 0;colonnne < tables[0].length;colonnne++){
         let jsonString = '{'
         for (let ligne = (variable.length-1) ;ligne >= 0;ligne--){
@@ -51,7 +51,6 @@ export const consoleBinaryTable = (tables: Array<Array<any>>,variable: Array<str
         }
         
         temp.push(JSON.parse(jsonString))
-        
     }
     console.table(temp)
 }
@@ -108,6 +107,29 @@ export class Dictionnaire {
         return (this.map.has(key))? true : false;
     }
 }
+
+export class DictionnaireString {
+    private map = new Map();
+    private set = new Set();
+
+    public addValue (key: string,value: string): void {
+        this.map.set(key,value);
+        this.set.add(value);
+    }
+
+    public getValue(key: string): string {
+        return this.map.get(key)
+    }
+
+    public hasValue(value: string): boolean {
+        return (this.set.has(value))? true : false;
+    }
+
+    public hasKey(key: string): boolean {
+        return (this.map.has(key))? true : false;
+    }
+}
+
 
 export const remplaceTo = (str: string,original:string,input: string): string => {
     const remplace = (str: string,start: number = 0,end: number,input: string): string => {
