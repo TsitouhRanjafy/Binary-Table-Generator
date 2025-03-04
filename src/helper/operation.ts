@@ -20,19 +20,12 @@ export const mainOperation = (operations: operation[],table: Dictionnaire,variab
         let var2 = operation.variable2;
         let operator = operation.operator
         
-        if (!v1) {
-            // var1 = pseudoVar.getValue(operation.variable1).trim()
-            v1 = table.getValue(pseudoVar.getValue(operation.variable1).trim());
-        }
-        if (!v2){
-            // var2 = pseudoVar.getValue(operation.variable2).trim()
-            v2 = table.getValue(pseudoVar.getValue(operation.variable2).trim());
-        }
+        if (!v1) v1 = table.getValue(pseudoVar.getValue(operation.variable1).trim());
+        if (!v2) v2 = table.getValue(pseudoVar.getValue(operation.variable2).trim());
         if (var1 == var2) { 
             var2 = '' 
             operator = ''
         };
-        console.log(v1,":",v2);
         
         switch (operation.operator) {
             case '&':
@@ -59,7 +52,7 @@ export const mainOperation = (operations: operation[],table: Dictionnaire,variab
                 variable.push("("+var1+operator+var2+")")
                 binaireTable = [...[table.getValue(("("+var1+operator+var2+")"))],...binaireTable] 
                 break;
-            case '<=>':
+            case '<=>':                
                 table.addValue(
                     ("("+var1+operator+var2+")"),
                     BinaryOperations.EQUIVALENT(v1,v2)

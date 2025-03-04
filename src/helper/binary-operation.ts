@@ -44,6 +44,10 @@ export class BinaryOperations {
 
     public static EQUIVALENT(array1: binary[],array2: binary[]): binary[] {
         let temp: binary[] = []
+        if (array1.length != array2.length) {
+            console.error("- INTERNAL ERROR: equivalent fonction error");
+            return temp;
+        }
         for (let i = 0;i < array1.length;i++){
             temp.push(equivalent(array1[i],array2[i]))
         }
