@@ -7,7 +7,7 @@ Ce programme est un générateur de table binaire en ligne de commande. Il perme
 
 ## 🖋️ Syntax expression
 
-$V_0 \theta V_1 \theta V_2 ... \theta V_i$
+$V_0 \theta_0 V_1 \theta_1 V_2 ... \theta_n V_i$
 
   - $V=$ variable = `a-z` ou/et `A-Z`
 
