@@ -51,7 +51,7 @@ const index = async ()  => {
         for (let i = (binaryIinit.length - 1); i >= 0; i--){
             table.addValue(variable[variable.length - i - 1],binaryIinit[i])
         }
-
+        input = formatLogicalExpression(input)
         // the operation
         let operations: operation[] | void;
         do {
@@ -69,7 +69,6 @@ const index = async ()  => {
                 pseudoVariable.addValue(pseudo,i.value)
             }
             input = formatLogicalExpression(input)
-            console.log(input);
             
         } while (input.length != 1);
 
