@@ -16,7 +16,6 @@ $V_0 \theta V_1 \theta V_2 ... \theta V_i$
  
 ## 🔍 Exemple
 
-- expression:
 
   - input:
   ```shell
@@ -29,8 +28,6 @@ $V_0 \theta V_1 \theta V_2 ... \theta V_i$
 ![1](https://github.com/user-attachments/assets/f42fd679-3a7c-499b-bb39-7d6d05d95754)
 
   
-
-- expression:
 
   - input:
   ```shell
@@ -53,8 +50,6 @@ cd Binary-Table-Generator
 npm install
 npm run start 
 ```
-
-- aper
 
 ## 🤝 Contribuer
 
