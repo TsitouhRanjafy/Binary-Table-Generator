@@ -25,8 +25,7 @@ export const mainOperation = (operations: operation[],table: Dictionnaire,variab
         if (var1 == var2) { 
             var2 = '' 
             operator = ''
-        };
-        
+        }
         switch (operation.operator) {
             case '&':
                 table.addValue(

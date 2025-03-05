@@ -119,12 +119,20 @@ export class DictionnaireString {
         return this.map.get(key)
     }
 
+    public entries(){
+        return this.map.entries();
+    }
+
     public hasValue(value: string): boolean {
         return (this.set.has(value))? true : false;
     }
 
     public hasKey(key: string): boolean {
         return (this.map.has(key))? true : false;
+    }
+    public clear(): void{
+        this.set.clear();
+        this.map.clear();    
     }
 }
 
@@ -160,7 +168,11 @@ export const formatLogicalExpression = (expression: string): string => {
     }
   
     // Remplacer les expressions avec & et | combinés avec d'autres opérateurs
-    let formattedExpression = expression.replace(/([A-Za-z()]+)([\|&])([A-Za-z()]+)/g, addParentheses);
-  
+    let formattedExpression = expression;
+    formattedExpression = formattedExpression.replace(/([A-Za-z~()]+)([\|&])([A-Za-z~()]+)/g, addParentheses);
+    if (formattedExpression != expression) return formattedExpression;
+    formattedExpression = formattedExpression.replace(/([A-Za-z~()]+)(=>)([A-Za-z~()]+)/g, addParentheses);
+    if (formattedExpression != expression) return formattedExpression;
+    formattedExpression = formattedExpression.replace(/([A-Za-z~()]+)(<=>)([A-Za-z~()]+)/g, addParentheses);
     return formattedExpression;
 }

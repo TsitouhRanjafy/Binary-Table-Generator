@@ -25,7 +25,9 @@ var pseuDoVarDisponible = ['A','B','C','D','E','F','J','K','L','M','N','P','Q','
 
 const index = async ()  => {
     do{
-        // CLI
+
+        /********************* CLI ************************/
+
         const response: {
             value: string
         } = await prompts({
@@ -34,25 +36,27 @@ const index = async ()  => {
             message: 'Entrer expression',
         })
 
-        // get input
+        /********************* INPUT VERIFICATION ***************************/
+
         var input: string = removeSpace(response.value) 
         input = '('+input+')'.toLowerCase()
-        console.log("\n\n expression: ",input);
-        
-        // verify the parenthesis of the expression 
+        console.log("\n\n expression: ",input); 
         if (!isParantheseNumberEqual(input)){
             console.error("\n - not accepted: verifier les paranthèses \n");
             return;
         } 
 
-        // init binary variable and binary table
+        /********************** INIT *************************/
+
         let variable = extractVariable(input)
         let binaryIinit = generateInitBinaryTable(variable);
         for (let i = (binaryIinit.length - 1); i >= 0; i--){
             table.addValue(variable[variable.length - i - 1],binaryIinit[i])
         }
         input = formatLogicalExpression(input)
-        // the operation
+
+        /*********************** OPERATION ********************/
+
         let operations: operation[] | void;
         do {
             // extract operation 
@@ -72,17 +76,37 @@ const index = async ()  => {
             
         } while (input.length != 1);
 
-        // show binary table
+        /************************** RESULT ******************************/
+
         consoleBinaryTable(binaryIinit,[...variable].reverse()); 
 
-    } while (input != '(stop)');
+        let iterator = pseudoVariable.entries();
+        let result = iterator.next();
+        console.log("\n pseudo:");
+        
+        while (!result.done) {
+            console.log("\t",result.value[0] ,' = ',result.value[1]);
+            result = iterator.next();
+        }
+
+        console.log("\n");
+        
+        /************************** REINITIALISE ******************************/
+
+        pseudoVariable.clear()
+        pseuDoVarDisponible = ['A','B','C','D','E','F','J','K','L','M','N','P','Q','R','S','T','U','W','X','Y','Z']
+
+    } while (input != '');
 
 }
 
 index();
 
-// (p => q) <=> (~p => ~p)
 
+// (p => q) <=> (~p => ~q)
+// p => q <=> ~p => ~q
+
+// 
 
 
 
