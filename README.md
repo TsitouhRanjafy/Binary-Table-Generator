@@ -48,8 +48,8 @@ $V_0 \theta V_1 \theta V_2 ... \theta V_i$
 ## 📦 Installation
 
 ```shell
-git clone 
-cd
+git clone https://github.com/TsitouhRanjafy/Binary-Table-Generator.git
+cd Binary-Table-Generator
 npm install
 npm run start 
 ```
