@@ -38,7 +38,7 @@ $V_0  \theta_0 V_1 \theta_1 V_2 ... \theta_n V_i$
     - $V=$ {p,q} (variables)      
     - $\theta=$ {=>,<=>} (opérateurs)
 
-  - **exemple 3:**
+  - **exemple 2:**
     ```shell
     ✔ Entrer expression … ((r & p) | r) <=> ((r <=> p) & p | (o & ~p))
      expression:  (((r&p)|r)<=>((r<=>p)&p|(o&~p)))
