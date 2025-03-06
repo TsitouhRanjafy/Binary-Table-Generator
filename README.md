@@ -19,7 +19,7 @@ $V_0  \theta_0 V_1 \theta_1 V_2 ... \theta_n V_i$
 
   - **exemple 1:**
     ```shell
-    ? Entrer expression › p => q <=> ~p => ~q
+    ✔ Entrer expression › p => q <=> ~p => ~q
       expression:  (p=>q<=>~p=>~q)
     ┌─────────┬───┬───┬────────┬────┬────┬──────────┬─────────┬─────┐
     │ (index) │ p │ q │ (p=>q) │ ~p │ ~q │ (~p=>~q) │ (Z<=>Y) │ (X) │
@@ -37,6 +37,10 @@ $V_0  \theta_0 V_1 \theta_1 V_2 ... \theta_n V_i$
     ```
     - $V=$ {p,q} (variables)      
     - $\theta=$ {=>,<=>} (opérateurs)
+      
+    ![binaire1](https://github.com/user-attachments/assets/b44bd549-9985-4a20-abdf-0275fb7f31a4)
+
+    
 
   - **exemple 2:**
     ```shell
@@ -76,7 +80,9 @@ $V_0  \theta_0 V_1 \theta_1 V_2 ... \theta_n V_i$
              D  =  (E)
     ```
     - $V=$ {r,p,o} (variables)    
-    - $\Theta=$ {&,|,<=>} (opérateurs)     
+    - $\Theta=$ {&,|,<=>} (opérateurs)
+      
+    ![binaire2](https://github.com/user-attachments/assets/7271071b-80db-40f4-b1fe-3041ca2dd0fa)
 
 ## 📦 Installation
 
