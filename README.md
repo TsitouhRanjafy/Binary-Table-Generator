@@ -3,7 +3,9 @@
 
 ## 📜 Description
 
-Ce programme est un générateur de table binaire en ligne de commande. Il permet d'évaluer des expressions logiques et de générer automatiquement la table de vérité correspondante.
+Ce programme est un générateur de table binaire en ligne de commande. Il permet d'évaluer des expressions logiques et de générer automatiquement la table de vérité correspondante. [demo](https://web.facebook.com/share/v/16JKwbzxgj/)
+
+
 
 ## 🖋️ Syntax expression
 
